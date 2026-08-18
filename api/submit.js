@@ -71,7 +71,7 @@ export async function route(payload, env, fetchImpl) {
     });
     let data = {};
     try { data = await r.json(); } catch (e) { data = {}; }
-    routed.ghl = { attempted: true, ok: !!(r && r.ok), status: r && r.status };
+    routed.ghl = { attempted: true, ok: !!(r && r.ok), status: r && r.status, diag: { tokenPreview: (env.GHL_TOKEN||'').slice(0,8) + '...' + (env.GHL_TOKEN||'').slice(-4), tokenLen: (env.GHL_TOKEN||'').length, loc: env.GHL_LOCATION_ID } };
 
     // Best-effort: attach a note with the details. Never fails the request.
     const contactId = data && (data.contact ? data.contact.id : data.id);
@@ -157,7 +157,7 @@ export async function routeSurvey(p, env, fetchImpl, formType) {
     });
     let data = {};
     try { data = await r.json(); } catch (e) { data = {}; }
-    routed.ghl = { attempted: true, ok: !!(r && r.ok), status: r && r.status };
+    routed.ghl = { attempted: true, ok: !!(r && r.ok), status: r && r.status, diag: { tokenPreview: (env.GHL_TOKEN||'').slice(0,8) + '...' + (env.GHL_TOKEN||'').slice(-4), tokenLen: (env.GHL_TOKEN||'').length, loc: env.GHL_LOCATION_ID } };
 
     const contactId = data && (data.contact ? data.contact.id : data.id);
     if (r && r.ok && contactId) {
